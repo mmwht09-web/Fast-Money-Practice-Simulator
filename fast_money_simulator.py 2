@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Fast Money Practice Simulator</title>
+</head>
+<body>
+
+<h1>Fast Money Practice Simulator</h1>
+
+<p>
+<strong>License & Disclaimer</strong><br><br>
+
+Copyright (c) 2025 Melissa Jené White-Hart<br><br>
+
+This software is licensed under the Creative Commons
+Attribution-NonCommercial-NoDerivatives 4.0 International License (CC-BY-NC-ND 4.0).<br><br>
+
+This software is for educational simulation purposes only.
+It does not provide financial, investment, or trading advice.
+No real market data is used.
+Results do not represent real-world outcomes.
+Use at your own risk.
+</p>
+
+<label>
+  <input type="checkbox" id="agree"> I agree to the license and disclaimer
+</label>
+<br><br>
+
+<button onclick="runSim()">Run Session</button>
+<button onclick="downloadCSV()">Download CSV</button>
+
+<pre id="output"></pre>
+
+<script>
+let tradeData = [];
+
+function runSim() {
+  if (!document.getElementById("agree").checked) {
+    alert("You must agree to the license.");
+    return;
+  }
+
+  tradeData = [];
+  let balance = 20;
+  let tradeSize = 5;
+  let output = "";
+
+  for (let i = 1; i <= 5; i++) {
+    let move = (Math.random() * 0.6) - 0.3;
+    let pnl = tradeSize * move;
+    let outcome = "BREAKEVEN";
+
+    if (move >= 0.15) {
+      pnl = tradeSize * 0.15;
+      outcome = "WIN";
+    } else if (move <= -0.10) {
+      pnl = tradeSize * -0.10;
+      outcome = "LOSS";
+    }
+
+    balance += pnl;
+    tradeData.push([i, outcome, pnl.toFixed(2), balance.toFixed(2)]);
+    output += `Trade ${i}: ${outcome} | P/L $${pnl.toFixed(2)} | Balance $${balance.toFixed(2)}\n`;
+  }
+
+  document.getElementById("output").textContent = output;
+}
+
+function downloadCSV() {
+  if (tradeData.length === 0) {
+    alert("Run a session first.");
+    return;
+  }
+
+  let csv = "Trade,Outcome,Profit/Loss,Balance\n";
+  tradeData.forEach(row => csv += row.join(",") + "\n");
+
+  let blob = new Blob([csv], { type: "text/csv" });
+  let link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "fast_money_session.csv";
+  link.click();
+}
+</script>
+
+</body>
+</html>

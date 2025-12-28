@@ -1,0 +1,20 @@
+# Fast Money Practice Simulator
+
+## Overview
+An educational simulator designed to practice fast decision-making using
+simulated trades only. No real money, no real market data, and no financial
+advice is provided.
+
+## Files Included
+- fast_money_simulator.py (Python version)
+- fast_money_simulator_web.html (Browser version)
+- LICENSE.txt
+- README.md
+
+## How to Run
+
+### Python Version
+1. Install Python 3
+2. Open a terminal or command prompt
+3. Navigate to the project folder
+4. Run:
